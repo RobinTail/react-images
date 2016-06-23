@@ -1,3 +1,4 @@
+const DOWNLOAD_SIZE = 20;
 const CLOSE_SIZE = 20;
 const ARROW_HEIGHT = 120;
 const GAP_BOTTOM = 50;
@@ -127,6 +128,18 @@ const styles = {
 		textAlign: 'right',
 		top: 0,
 		width: '100%',
+	},
+	downloadButton: {
+		background: 'none',
+		border: 'none',
+		cursor: 'pointer',
+		height: DOWNLOAD_SIZE + 20,
+		outline: 'none',
+		padding: 10,
+		position: 'relative',
+		right: -16,
+		top: 4,
+		width: DOWNLOAD_SIZE + 20,
 	},
 	closeButton: {
 		background: 'none',

@@ -35,6 +35,7 @@ class Lightbox extends Component {
 		super();
 
 		utils.bindFunctions.call(this, [
+			'download',
 			'close',
 			'gotoNext',
 			'gotoPrev',
@@ -68,6 +69,9 @@ class Lightbox extends Component {
 	// METHODS
 	// ==============================
 
+	download () {
+		window.open(this.props.images[this.props.currentImage].src);
+	}
 	close (e) {
 		if (e.target.id !== 'react-images-container') return;
 
@@ -154,19 +158,40 @@ class Lightbox extends Component {
 			</button>
 		);
 	}
+	renderDownloadButton () {
+		if (!this.props.showDownloadButton) return null;
+		const { classes } = this.props.sheet;
+		return (
+			<button
+				title="Download"
+				className={classes.downloadButton}
+				onClick={this.download}
+			>
+				<Icon type="download" />
+			</button>
+		);
+	}
 	renderCloseButton () {
 		if (!this.props.showCloseButton) return null;
 		const { classes } = this.props.sheet;
 
 		return (
+			<button
+				title="Close (Esc)"
+				className={classes.closeButton}
+				onClick={this.props.onClose}
+			>
+				<Icon type="close" />
+			</button>
+		);
+	}
+	renderCloseBar () {
+		const { classes } = this.props.sheet;
+
+		return (
 			<div className={classes.closeBar}>
-				<button
-					title="Close (Esc)"
-					className={classes.closeButton}
-					onClick={this.props.onClose}
-					>
-					<Icon type="close" />
-				</button>
+				{this.renderDownloadButton()}
+				{this.renderCloseButton()}
 			</div>
 		);
 	}
@@ -184,7 +209,7 @@ class Lightbox extends Component {
 			>
 				<span className={classes.contentHeightShim} />
 				<div className={classes.content}>
-					{this.renderCloseButton()}
+					{this.renderCloseBar()}
 					{this.renderImages()}
 				</div>
 				{this.renderArrowPrev()}
@@ -284,6 +309,7 @@ Lightbox.propTypes = {
 	onClose: PropTypes.func.isRequired,
 	sheet: PropTypes.object,
 	showCloseButton: PropTypes.bool,
+	showDownloadButton: PropTypes.bool,
 	showImageCount: PropTypes.bool,
 	width: PropTypes.number,
 };
@@ -294,6 +320,7 @@ Lightbox.defaultProps = {
 	imageCountSeparator: ' of ',
 	onClickShowNextImage: true,
 	showCloseButton: true,
+	showDownloadButton: true,
 	showImageCount: true,
 	width: 900,
 };
